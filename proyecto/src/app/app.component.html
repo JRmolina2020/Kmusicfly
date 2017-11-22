@@ -1,0 +1,154 @@
+<style type="text/css">
+	.title{
+		font-family: 'Pacifico', cursive;
+font-family: 'Kaushan Script', cursive;
+text-align: center;
+	}
+
+.well{
+	background-color:#fff;
+}
+
+.inputsr{
+	background-color:#f5f5f5;
+	text-align: center;
+}
+
+.info{
+	color:#566573;
+	text-align: center;
+	font-family: 'Timmana', sans-serif;
+}
+
+
+</style>
+
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Pacifico" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Timmana" rel="stylesheet">
+
+<!-- ..............MENU -->
+
+<div *ngIf="identity" class="navigation col-lg-1">
+	<h1 class="head-title">
+		<a [routerLink]="['/']">
+			<span class="glyphicon glyphicon-music" aria-hidden="true"></span>
+		</a>
+	</h1>
+	<nav id="navigation">
+		<a [routerLink]="['/artistas', 1]" [routerLinkActive]="['actived']">
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+			Artistas
+		</a>
+		<a href="#">
+			<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+			Albums
+		</a>
+	</nav>
+
+	<nav id="user_logged">
+		<div class="user-image">
+			<img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}"/>
+		</div>
+		<span id="identity_name">
+			{{identity.name}}
+		</span>
+
+		<a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">
+			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+			Mis datos
+		</a>
+		<a (click)="logout()" class="btn-logout">
+			<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+			Salir
+		</a>
+	</nav>
+</div>
+
+<div [class.hidden]="!identity" class="central col-lg-11">
+	<router-outlet></router-outlet>
+
+	<div class="clearfix"></div>
+	<player class="player" *ngIf="identity"></player>
+</div>
+
+
+<div class=" col-lg-12" *ngIf="!identity">
+<br><br><br><br>
+	<div class="well  col-lg-3 ">
+		<h1 class="title">Kmusic FLY</h1>
+		<br>
+		<h4 class="info">REGISTRATE PARA ESCUCHAR LA MEJOR MUSICA
+		DE TUS ARTISTAS FAVORITOS</h4>
+		<div *ngIf="alertRegister">
+			<div class="alert alert-info">
+			  {{alertRegister}}
+			</div>
+		</div>
+		<form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="col-12-12">
+			<p>
+				<input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name" placeholder="Nombre" class="form-control inputsr" required />
+				<span *ngIf="!name.valid && name.touched">
+					El nombre es obligatorio
+				</span>
+			</p>
+
+			<p>
+				<input type="text" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" placeholder="Apellido" class="form-control inputsr" required />
+				<span *ngIf="!surname.valid && surname.touched">
+					Los apellidos son obligatorios
+				</span>
+			</p>
+
+			<p>
+				<input type="email" #email="ngModel" name="email" [(ngModel)]="user_register.email" class="form-control inputsr" placeholder="Correo electronico" required />
+				<span *ngIf="!email.valid && email.touched">
+					El email es obligatorio
+				</span>
+			</p>
+
+			<p>
+				<input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" placeholder="Password" class="form-control inputsr" required />
+				<span *ngIf="!password.valid && password.touched">
+					La contraseña es obligatoria
+				</span>
+			</p>
+
+			<input type="submit" value="Regristrarse" class="btn btn-primary title" />
+
+				<br><br><br><br>
+
+		</form> 
+	</div>
+	<div class="well col-lg-3">
+	<h1 class="title">LOG-IN</h1>
+	<br>
+	<h4 class="info">INGRESA TUS DATOS</h4><BR>
+      <div *ngIf="errorMessage">
+			<div class="alert alert-info">
+			  <strong>Error</strong> {{errorMessage}}
+			</div>
+		</div>
+		<form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-12">
+			<p>
+				<input type="email" #email="ngModel" name="email" [(ngModel)]="user.email" placeholder="Correo electronico" class="form-control inputsr " required align="center" />
+				<span *ngIf="!email.valid && email.touched">
+					El email es obligatorio
+				</span>
+			</p>
+			<p>
+				<input type="password" #password="ngModel" name="password" [(ngModel)]="user.password" placeholder="Password" class="form-control inputsr" required />
+			</p>
+			<input type="submit" value="Entrar" class="btn btn-primary title" /><br><p></p>
+		</form>
+
+	</div>
+	<div class="col-lg-6 col-s-9">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/U-4pdTbWFQQ?rel=0&autoplay=1;start=20s" frameborder="0" allowfullscreen></iframe>
+  
+</div>
+
+	</div>
+
+
+
+
